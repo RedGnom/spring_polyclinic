@@ -16,9 +16,9 @@ public class UserService {
     }
 
     public User getUserProfile(String email){
-         User user = userRepository.findByEmail(email)
+         return userRepository.findByEmail(email)
                  .orElseThrow(() -> new UsernameNotFoundException("Пользователя с почтой " + email + " не найден"));
-         return user;
+
     }
 
 }
