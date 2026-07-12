@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class PatientDto {
-    private String height;
+    private Double height;
 
-    private String weight;
+    private Double weight;
 
     private List<Diagnose> diagnoses;
 }
