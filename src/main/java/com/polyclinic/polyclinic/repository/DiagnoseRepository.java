@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface DiagnoseRepository {
     Optional<Diagnose> findByDiagnosisName(String diagnosisName);
+    Optional<Diagnose> findById(Long id);
 }
