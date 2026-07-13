@@ -19,7 +19,11 @@ public class UserService {
     public User getUserProfile(String email){
          return userRepository.findByEmail(email)
                  .orElseThrow(() -> new UsernameNotFoundException("Пользователя с почтой " + email + " не найден"));
+    }
 
+    public User getUserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
     }
     // Получение dto с общими данными о пользователе
     public UserDto getPatientBaseInfo(String email){
