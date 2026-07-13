@@ -1,6 +1,5 @@
 package com.polyclinic.polyclinic.dto;
 
-import com.polyclinic.polyclinic.entity.Diagnose;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +14,5 @@ public class PatientDto {
 
     private Double weight;
 
-    private List<Diagnose> diagnoses;
+    private List<DiagnoseDto> diagnoses;
 }
