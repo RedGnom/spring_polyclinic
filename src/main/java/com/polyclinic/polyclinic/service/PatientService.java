@@ -50,15 +50,8 @@ public class PatientService {
             for (DiagnoseDto diagnoseDto : dto.getDiagnoses()) {
                 Diagnose diagnose;
 
-                if (diagnoseDto.getId() != null) {
-                    // Существующий диагноз - загружаем из БД
-                    diagnose = diagnoseRepository.findById(diagnoseDto.getId())
-                            .orElseThrow(() -> new EntityNotFoundException("Диагноз не найден"));
-                } else {
-                    // Новый диагноз - создаем
-                    diagnose = new Diagnose();
-                    diagnose.setDiagnosisName(diagnoseDto.getDiagnosisName());
-                }
+                diagnose = diagnoseRepository.findById(diagnoseDto.getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Диагноз не найден"));
 
                 diagnoses.add(diagnose);
             }
