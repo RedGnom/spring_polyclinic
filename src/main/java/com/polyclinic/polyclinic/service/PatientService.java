@@ -6,6 +6,7 @@ import com.polyclinic.polyclinic.dto.UserDto;
 import com.polyclinic.polyclinic.entity.Diagnose;
 import com.polyclinic.polyclinic.entity.PatientProfile;
 import com.polyclinic.polyclinic.entity.User;
+import com.polyclinic.polyclinic.exception.PatientProfileNotFoundException;
 import com.polyclinic.polyclinic.mapper.PatientProfileMapper;
 import com.polyclinic.polyclinic.repository.DiagnoseRepository;
 import com.polyclinic.polyclinic.repository.PatientProfileRepository;
@@ -27,15 +28,19 @@ public class PatientService {
     private final DiagnoseRepository diagnoseRepository;
 
     // Получение профиля пациента с диагнозами
-    public PatientDto getPatientProfile(Long id){
-        PatientProfile profile = patientRepository.findByIdWithDiagnoses(id)
-                .orElseThrow();
+    public PatientDto getPatientProfileDto(Long userId){
+        PatientProfile profile = patientRepository.findByIdWithDiagnoses(userId)
+                .orElseThrow(() -> new PatientProfileNotFoundException("Не найден профиль пациента " + userId));
         return patientMapper.toPatientDto(profile);
     }
 
     // Создание профиля
     @Transactional
     public PatientProfile createPatientProfile(Long userId, PatientDto dto){
+
+        if(patientRepository.existsByUserId(userId)){
+            throw new IllegalStateException("У пользователя уже есть профиль пациента");
+        }
         User user = userService.getUserById(userId);
 
         // Создаем профиль пациента
@@ -47,7 +52,7 @@ public class PatientService {
 
         if (dto.getDiagnoses() != null) {
             List<Diagnose> diagnoses = new ArrayList<>();
-            for (DiagnoseDto diagnoseDto : dto.getDiagnoses()) {
+            for (DiagnoseDto diagnoseDto : dto.getDiagnoses()){
                 Diagnose diagnose;
 
                 diagnose = diagnoseRepository.findById(diagnoseDto.getId())
@@ -59,8 +64,12 @@ public class PatientService {
         }
 
         return profile;
+    }
+    public void deletePatientProfile(Long userId){
+        PatientProfile profile = patientRepository.findById(userId)
+                .orElseThrow(() -> new PatientProfileNotFoundException("Не найден профиль пациента " + userId));
 
-
+        patientRepository.deleteById(userId);
 
 
     }
