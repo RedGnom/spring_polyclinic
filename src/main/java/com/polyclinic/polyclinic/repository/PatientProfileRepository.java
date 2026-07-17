@@ -18,4 +18,6 @@ public interface PatientProfileRepository extends JpaRepository<PatientProfile, 
 
     @Query("SELECT p FROM PatientProfile p JOIN p.diagnoses d WHERE d.id = :diagnoseId")
     List<PatientProfile> findByDiagnoseId(@Param("diagnoseId") Long diagnoseId);
+
+    boolean existsByUserId(Long userId);
 }
