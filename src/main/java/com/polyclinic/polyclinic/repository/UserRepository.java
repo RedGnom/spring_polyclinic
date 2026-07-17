@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     Optional<User> findByBirthDate(LocalDate birthDate);
 
+    boolean existsByEmail(String email);
+
     @Query("SELECT u FROM User u WHERE " +
             "LOWER(u.firstName) = LOWER(:firstName) AND " +
             "LOWER(u.secondName) = LOWER(:secondName) AND " +

@@ -1,5 +1,6 @@
 package com.polyclinic.polyclinic.service;
 
+import com.polyclinic.polyclinic.dto.RegisterDto;
 import com.polyclinic.polyclinic.dto.UserDto;
 import com.polyclinic.polyclinic.entity.User;
 import com.polyclinic.polyclinic.mapper.UserMapper;
@@ -24,6 +25,20 @@ public class UserService {
     public User getUserById(Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
+    }
+
+    public UserDto createUser(RegisterDto registerDto){
+        if(!userRepository.existsByEmail(registerDto.getEmail())){
+            throw new UsernameNotFoundException("Пользователя с почтой " + registerDto.getEmail() + " не найден");
+        }
+        User user = new User();
+
+        user = mapper.toUserEntity(registerDto);
+        userRepository.save(user);
+
+        return mapper.toUserDto(user);
+
+
     }
     // Получение dto с общими данными о пользователе
     public UserDto getPatientBaseInfo(String email){
