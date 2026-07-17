@@ -6,6 +6,7 @@ import com.polyclinic.polyclinic.dto.UserDto;
 import com.polyclinic.polyclinic.entity.Diagnose;
 import com.polyclinic.polyclinic.entity.PatientProfile;
 import com.polyclinic.polyclinic.entity.User;
+import com.polyclinic.polyclinic.enums.Role;
 import com.polyclinic.polyclinic.exception.PatientProfileNotFoundException;
 import com.polyclinic.polyclinic.mapper.PatientProfileMapper;
 import com.polyclinic.polyclinic.repository.DiagnoseRepository;
@@ -42,6 +43,7 @@ public class PatientService {
             throw new IllegalStateException("У пользователя уже есть профиль пациента");
         }
         User user = userService.getUserById(userId);
+        user.setRole(Role.PATIENT);
 
         // Создаем профиль пациента
         PatientProfile profile = new PatientProfile();

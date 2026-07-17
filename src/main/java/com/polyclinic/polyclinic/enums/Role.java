@@ -2,5 +2,5 @@ package com.polyclinic.polyclinic.enums;
 
 
 public enum Role {
-    ADMIN, PATIENT
+    ADMIN, PATIENT, DOCTOR
 }
