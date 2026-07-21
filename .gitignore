@@ -4,30 +4,53 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
-.apt_generated
+### IDE ###
+.idea/
+*.iml
+*.iws
+*.ipr
 .classpath
-.factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
 .vscode/
+*.swp
+*.swo
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Logs & Temp ###
+logs/
+*.log
+*.tmp
+*.temp
+*~
+
+### Configs with secrets ###
+*.local.*
+application-local.properties
+application-dev.properties
+application-dev.yml
+.env
+*.env
+!.env.example
+
+### Build ###
+build/
+out/
+*.jar
+*.war
+*.ear
+
+### Database ###
+*.db
+*.h2.db
+*.mv.db
+
+### Dumps ###
+*.hprof
+*.heap
+*.dump
