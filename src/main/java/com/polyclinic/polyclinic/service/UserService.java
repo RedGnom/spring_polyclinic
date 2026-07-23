@@ -17,7 +17,7 @@ public class UserService {
 
 
     // Возврат пользователя с проверкой на наличие
-    public User getUserProfile(String email){
+    public User getUserByEmail(String email){
          return userRepository.findByEmail(email)
                  .orElseThrow(() -> new UsernameNotFoundException("Пользователя с почтой " + email + " не найден"));
     }
@@ -26,6 +26,7 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
     }
+
 
     public UserDto createUser(RegisterDto registerDto){
         if(!userRepository.existsByEmail(registerDto.getEmail())){
@@ -41,8 +42,8 @@ public class UserService {
 
     }
     // Получение dto с общими данными о пользователе
-    public UserDto getPatientBaseInfo(String email){
-        User user = getUserProfile(email);
+    public UserDto getUserDto(Long userId){
+        User user = getUserById(userId);
 
         // mapper для полей dto 
         return mapper.toUserDto(user);

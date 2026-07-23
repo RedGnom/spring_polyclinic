@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,11 +16,20 @@ public class UserController {
     final private UserService userService;
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody
                                                 RegisterDto registerDto){
         UserDto userDto = userService.createUser(registerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
     }
+
+    @GetMapping
+    public ResponseEntity<UserDto> getUserById(Long userId){
+        UserDto userDto = userService.getUserDto(userId);
+
+        return ResponseEntity.ok().body(userDto);
+
+    }
+
 
 
 
