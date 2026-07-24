@@ -24,7 +24,7 @@ public class Visit {
 
     // Связь с пациентом, кто проходил прием
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "patient_profile_id", nullable = false)
+    @JoinColumn(name = "patient_profile_id", nullable = false)
     private PatientProfile patient;
 
     // Связь с врачом, кто проводил прием

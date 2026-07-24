@@ -31,6 +31,7 @@ public class Appointment {
     private AppointmentStatus status; // Статус записи
 
     // Связанный визит
-    @OneToOne(mappedBy = "appointment",cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "visit_id")
     private Visit visit;
 }
