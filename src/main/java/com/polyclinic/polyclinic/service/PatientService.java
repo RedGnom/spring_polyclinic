@@ -25,14 +25,14 @@ import java.util.List;
 public class PatientService {
     private final PatientProfileRepository patientRepository;
     private final UserService userService;
-    private final PatientProfileMapper patientMapper;
     private final DiagnoseRepository diagnoseRepository;
+    private final PatientProfileMapper mapper;
 
     // Получение профиля пациента с диагнозами
     public PatientDto getPatientProfileDto(Long userId){
         PatientProfile profile = patientRepository.findByIdWithDiagnoses(userId)
                 .orElseThrow(() -> new PatientProfileNotFoundException("Не найден профиль пациента " + userId));
-        return patientMapper.toPatientDto(profile);
+        return mapper.toPatientDto(profile);
     }
 
     // Создание профиля
@@ -50,7 +50,7 @@ public class PatientService {
         profile.setUser(user);
 
         // Заполняем вес и рост
-        profile = patientMapper.toPatientProfileEntity(dto);
+        profile = mapper.toPatientProfileEntity(dto);
 
         if (dto.getDiagnoses() != null) {
             List<Diagnose> diagnoses = new ArrayList<>();
