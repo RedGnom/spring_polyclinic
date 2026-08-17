@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,9 +34,14 @@ public class User {
     @Column(name = "patronymic")
     private String patronymic;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
+    private Set<Role> roles = new HashSet<>();
 
     // Профиль пациента для пользователя(диагнозы и пр)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
