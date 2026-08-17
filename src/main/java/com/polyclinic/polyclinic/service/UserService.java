@@ -38,8 +38,8 @@ public class UserService {
 
         user = mapper.toUserEntity(registerDto);
         // Изначально пустая роль пользователя
-        user.setRole(Role.USER);
 
+        user.getRoles().add(Role.USER);
         userRepository.save(user);
 
         return mapper.toUserDto(user);
@@ -50,7 +50,7 @@ public class UserService {
     public UserDto getUserDto(Long userId){
         User user = getUserById(userId);
 
-        // mapper для полей dto 
+        // mapper для полей dto
         return mapper.toUserDto(user);
     }
 

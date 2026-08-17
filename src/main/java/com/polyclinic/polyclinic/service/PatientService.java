@@ -43,7 +43,7 @@ public class PatientService {
             throw new IllegalStateException("У пользователя уже есть профиль пациента");
         }
         User user = userService.getUserById(userId);
-        user.setRole(Role.PATIENT);
+        user.getRoles().add(Role.PATIENT);
 
         // Создаем профиль пациента
         PatientProfile profile = new PatientProfile();
