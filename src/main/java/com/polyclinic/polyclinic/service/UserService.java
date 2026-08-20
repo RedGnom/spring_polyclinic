@@ -18,12 +18,6 @@ public class UserService {
     private final UserMapper mapper;
 
 
-    // Возврат пользователя с проверкой на наличие
-    public User getUserByEmail(String email){
-         return userRepository.findByEmail(email)
-                 .orElseThrow(() -> new UsernameNotFoundException("Пользователя с почтой " + email + " не найден"));
-    }
-
     public User getUserById(Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с id " + id + " не найден"));
