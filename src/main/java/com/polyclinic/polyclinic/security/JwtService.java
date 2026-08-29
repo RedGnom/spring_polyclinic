@@ -25,9 +25,9 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long expirationTime;
 
-    public String generateToken(CustomUserDetails userDetails, Long userId) {
+    public String generateToken(CustomUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", userId);
+        claims.put("userId", userDetails.getId());
         claims.put("roles", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
