@@ -9,6 +9,7 @@ import com.polyclinic.polyclinic.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
 
     public User getUserById(Long id){
@@ -24,21 +26,21 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto createUser(RegisterDto registerDto){
+    public User createUser(RegisterDto registerDto){
         if(userRepository.existsByEmail(registerDto.getEmail())){
             throw new IllegalStateException("Пользователя с почтой " + registerDto.getEmail() + " уже существует");
         }
-        User user = new User();
 
-        user = mapper.toUserEntity(registerDto);
+        User user = mapper.toUserEntity(registerDto);
+
+        // Шифрование пароля
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         // Изначально пустая роль пользователя
-
         user.getRoles().add(Role.USER);
+
         userRepository.save(user);
 
-        return mapper.toUserDto(user);
-
-
+        return user;
     }
     // Получение dto с общими данными о пользователе
     public UserDto getUserDto(Long userId){
