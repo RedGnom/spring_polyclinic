@@ -1,5 +1,6 @@
 package com.polyclinic.polyclinic.controller;
 
+import com.polyclinic.polyclinic.dto.AuthResponse;
 import com.polyclinic.polyclinic.dto.LoginDto;
 import com.polyclinic.polyclinic.dto.RegisterDto;
 import com.polyclinic.polyclinic.dto.UserDto;
@@ -26,10 +27,10 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody
+    public ResponseEntity<AuthResponse> registerUser(@Valid @RequestBody
                                                 RegisterDto registerDto){
-        UserDto userDto = userService.createUser(registerDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+        AuthResponse authResponse = authService.register(registerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
     }
 
 
